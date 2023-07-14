@@ -1,7 +1,8 @@
+import { useReducer } from 'react'
 import './App.css'
 
 function App() {
- 
+ const [rohan,dispatch]=useReducer(reducer,{value:2})
 
   return (
     <>
