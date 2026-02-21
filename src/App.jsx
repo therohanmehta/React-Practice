@@ -1,39 +1,29 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import { decrement, incByValue, increment } from "./reduxSlicer";
 
-import { useState } from "react";
+import { inc, dec, byValue } from "./redux/counterSlice";
+import { fetchUser } from "./redux/userAsyncThunk";
 
 function App() {
-  const count = useSelector((state) => state.counter.value);
   const dispatch = useDispatch();
-  const [num, setNum] = useState();
+  const value = useSelector((state) => state.counter.value);
+  const { users, loading, isError } = useSelector((state) => state.users);
 
   return (
     <>
-      <h2>{count}</h2>
+      <h2>{value}</h2>
+      {JSON.stringify(users)}--
+      {JSON.stringify(isError)}--
+      {JSON.stringify(loading)}
+      <button onClick={() => dispatch(inc())}>Increment</button>
+      <button onClick={() => dispatch(dec())}>Decrement</button>
+      <button onClick={() => dispatch(byValue(10))}>Increment by 10</button>
       <button
         onClick={() => {
-          dispatch(increment());
+          dispatch(fetchUser());
         }}
       >
-        inc
-      </button>
-      <button   onClick={() => {
-          dispatch(decrement());
-        }}>dec</button>
-      <input
-        type="text"
-        onChange={(e) => {
-          setNum(+e.target.value);
-        }}
-      />
-      <button
-        onClick={() => {
-          dispatch(incByValue(num));
-        }}
-      >
-        incbyValue
+        Fetch User
       </button>
     </>
   );
